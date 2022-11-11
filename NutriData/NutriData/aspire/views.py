@@ -1,3 +1,7 @@
+#### Some changes
+## Some other changes
+# A third change
+
 from django.http import HttpResponse
 
 def indexPageView(request) :
