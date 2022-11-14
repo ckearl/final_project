@@ -1,16 +1,17 @@
 from django.http import HttpResponse
+from django.shortcuts import render
 
 def indexPageView(request) :
-    return HttpResponse('you have succesfully reached the INDEX page') 
+    return render(request, 'aspire/index.html')
 
 def loginPageView(request) :
-    return HttpResponse('you have succesfully reached the LOGIN page') 
+    return render(request, 'aspire/login.html')
 
 def searchPageView(request) :
-    return HttpResponse('you have succesfully reached the SEARCH page') 
+    return render(request, 'aspire/search.html')
 
 def savedPageView(request) :
-    return HttpResponse('you have succesfully reached the SAVED page') 
+    return render(request, 'aspire/saved.html')
 
 def recipePageView(request) :
-    return HttpResponse('you have succesfully reached the RECIPE page') 
+    return render(request, 'aspire/recipe.html')
