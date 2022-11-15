@@ -1,7 +1,5 @@
 from django.db import models
 
-
-
 class Recipe(models.Model) :
     recipeTitle = models.CharField(max_length= 20)
     recipeImgUrl = models.URLField(max_length= 200)
@@ -18,6 +16,7 @@ class Account(models.Model) :
 
     def __str__(self) :
         return (self.email)
+        
 class Folder(models.Model) :
     folderName = models.CharField(max_length= 20)
     Recipe = models.ManyToManyField(Recipe, blank= False)
