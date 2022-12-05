@@ -60,7 +60,6 @@ def savedPageView(request, user_id, recipe_name=None) :
     for recipe_user in recipe_user_dict :
         recipe_obj_list.append((Recipe.objects.get(recipeId = recipe_user.recipe.recipeId)))
 
-    #this totally doesn't work properly. pass in a list a recipe objects
     context = {
             'user' : user,
             'recipe_obj_list' : recipe_obj_list,
