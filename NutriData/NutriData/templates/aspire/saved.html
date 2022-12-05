@@ -14,7 +14,13 @@
  {% block title %} Saved {% endblock %}
  {% block content %}
 
-<div class="s005">
+<style>
+.saved-background {
+  background-image: url("{% static 'admin/img/food.jpg' %}");
+}
+</style>
+
+<div class="s005 saved-background">
     <form>
       <fieldset>
         <legend>WHAT ARE YOU LOOKING FOR?</legend>
@@ -199,7 +205,7 @@
     </table>
 </div>
 
-  <script src="js/extention/choices.js"></script>
+  <script src="{% static 'admin/js/extention/choices.js'%}"></script>
   <script>
     var textPresetVal = new Choices('#choices-text-preset-values',
     {
