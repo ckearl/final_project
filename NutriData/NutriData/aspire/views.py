@@ -51,7 +51,7 @@ def savedPageView(request, user_id=1, recipe_name=None, ingredient_name=None, in
         recipe_dict = searchRecipes(recipe_name)
     else :
         recipe_dict = dict()
-
+    '''
     #search ingredients
     if ingredient_name != None :
         ingredient_dict = searchIngredients(ingredient_name)
@@ -63,6 +63,7 @@ def savedPageView(request, user_id=1, recipe_name=None, ingredient_name=None, in
         measure_list = getIngredientInformation1(ingredient_id)
     else :
         measure_list = list()
+    '''
 
     user = User.objects.get(id = user_id)
     meal_dict = Recipe_User.objects.filter(user = user_id)
@@ -76,15 +77,14 @@ def savedPageView(request, user_id=1, recipe_name=None, ingredient_name=None, in
             'user' : user,
             'ingredient_name' : ingredient_name,
             'recipe_dict' : recipe_dict,
-            'ingredient_dict' : ingredient_dict,
+            #'ingredient_dict' : ingredient_dict,
             'ingredient_id' : ingredient_id,
-            'measure_list' : measure_list,
+            #'measure_list' : measure_list,
         }
 
     return render(request, 'health_app/dash.html', context)
 
 #this allows a user to view recipes (search)
-
 def dashboardRecipePageView(request, user_id) :
     user = User.objects.get(id = user_id)
     recipe_name = request.GET['recipe_name']
@@ -107,10 +107,10 @@ def addRecipePageView(request, user_id) :
     new_recipe.calories = recipe_dict['calories'] 
     new_recipe.save()
 
-    new_meal = Recipe_User()
-    new_meal.recipe = new_recipe
-    new_meal.user = user
-    new_meal.save()
+    new_recipe_user = Recipe_User()
+    new_recipe_user.recipe = new_recipe
+    new_recipe_user.user = user
+    new_recipe_user.save()
 
     return savedPageView(request, user_id)
 
