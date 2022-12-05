@@ -51,22 +51,6 @@ def savedPageView(request, user_id=1, recipe_name=None, ingredient_name=None, in
         recipe_dict = searchRecipes(recipe_name)
     else :
         recipe_dict = dict()
-<<<<<<< HEAD
-=======
-    '''
-    #search ingredients
-    if ingredient_name != None :
-        ingredient_dict = searchIngredients(ingredient_name)
-    else :
-        ingredient_dict = dict()
-
-    #enter measurement for ingredients
-    if ingredient_id != None :
-        measure_list = getIngredientInformation1(ingredient_id)
-    else :
-        measure_list = list()
-    '''
->>>>>>> de556c953c1e6ddca83b9af3add835fdd2dd4e89
 
     user = User.objects.get(id = user_id)
     meal_dict = Recipe_User.objects.filter(user = user_id)
@@ -80,12 +64,6 @@ def savedPageView(request, user_id=1, recipe_name=None, ingredient_name=None, in
             'user' : user,
             'ingredient_name' : ingredient_name,
             'recipe_dict' : recipe_dict,
-<<<<<<< HEAD
-=======
-            #'ingredient_dict' : ingredient_dict,
-            'ingredient_id' : ingredient_id,
-            #'measure_list' : measure_list,
->>>>>>> de556c953c1e6ddca83b9af3add835fdd2dd4e89
         }
 
     return render(request, 'health_app/dash.html', context)
