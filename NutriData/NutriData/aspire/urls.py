@@ -1,12 +1,13 @@
 from django.urls import path
 from .views import indexPageView, loginPageView, savedPageView, recipePageView, savedUserPageView, \
-    savedLoginPageView, dashboardRecipePageView, addRecipePageView
+    savedLoginPageView, dashboardRecipePageView, addRecipePageView, registerPageView
 
 urlpatterns = [
     path("", indexPageView, name="index"),
     path("login/", loginPageView, name="login"),   
-    path("register/", loginPageView, name="register"),   
-    path("saved/<int:user_id><str:recipe_name><str:ingredient_name><int:ingredient_id>", savedPageView, name="saved"), 
+    path("register/", registerPageView, name="register"),   
+    path("saved/<int:user_id><str:recipe_name>", savedPageView, name="saved"), 
+    path("saved/<int:user_id>", savedPageView, name="saved"), 
     path("recipe/<int:user_id>", recipePageView, name="recipe"), 
     path("saved_user/", savedUserPageView, name="saved_user"), 
     path("saved_login/", savedLoginPageView, name="saved_login"), 

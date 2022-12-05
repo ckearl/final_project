@@ -1,172 +1,48 @@
  <!-- no django forms required -->
 
-{% extends 'base.html' %}
-{% load static %}
-{% block content %}
-<div class="s005">
-    <form>
-      <fieldset>
-        <legend>WHAT ARE YOU LOOKING FOR?</legend>
-        <div class="inner-form">
-          <div class="input-field">
-            <input class="form-control" id="choices-text-preset-values" type="text" placeholder="Type to search..." />
-            <button class="btn-search" type="button">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
-              </svg>
-            </button>
-          </div>
-        </div>
+ {% extends 'base.html'%}
+ {% load static %}
+ {% block title %} Landing {% endblock %}
+ {% block content %}
 
-        <div class="accordion" id="accordionExample">
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="headingTwo">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                <div class="suggestion-wrap">
-                  <span>Click for advanced search</span>
-                </div>
-              </button>
-            </h2>
-            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-              <div class="accordion-body">
-                <div class="accordion-container">
-                  <div class='accordion-row'>
-
-                    <!-- top right accordion column -->
-                    <div class='accordion-column'>
-                      <div class='top-left-column'>
-                        
-                        <div class="input-group mb-3">
-                          <button class="btn btn-outline-secondary" type="button" id="button-addon1">CARBOHYDRATES</button>
-                          <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="true" id="carb_button"></button>
-                          <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" id="carb_min" onclick="replace_minmax('Min', 'carb_button')" href="#">Min</a></li>
-                            <li><a class="dropdown-item" id="carb_max" onclick="replace_minmax('Max', 'carb_button')" href="#">Max</a></li>
-                          </ul>
-                          <input type="number" class="form-control" aria-label="Text input with dropdown button" min="0">
-                        </div>
-
-                        <div class="input-group mb-3">
-                          <button class="btn btn-outline-secondary" type="button" id="button-addon1">PROTEIN</button>
-                          <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="true" id="protein_button"></button>
-                          <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" id="protein_min" onclick="replace_minmax('Min', 'protein_button')" href="#">Min</a></li>
-                            <li><a class="dropdown-item" id="protein_max" onclick="replace_minmax('Max', 'protein_button')" href="#">Max</a></li>
-                          </ul>
-                          <input type="number" class="form-control" aria-label="Text input with dropdown button" min="0">
-                        </div>
-
-                        <div class="input-group mb-3">
-                          <button class="btn btn-outline-secondary" type="button" id="button-addon1">FAT</button>
-                          <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="true" id="fat_button"></button>
-                          <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" id="fat_min" onclick="replace_minmax('Min', 'fat_button')" href="#">Min</a></li>
-                            <li><a class="dropdown-item" id="fat_max" onclick="replace_minmax('Max', 'fat_button')" href="#">Max</a></li>
-                          </ul>
-                          <input type="number" class="form-control" aria-label="Text input with dropdown button" min="0">
-                        </div>
-
-                        <div class="input-group mb-3">
-                          <button class="btn btn-outline-secondary" type="button" id="button-addon1">CALORIES</button>
-                          <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="true" id="calories_button"></button>
-                          <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" id="calories_min" onclick="replace_minmax('Min', 'calories_button')" href="#">Min</a></li>
-                            <li><a class="dropdown-item" id="calories_max" onclick="replace_minmax('Max', 'calories_button')" href="#">Max</a></li>
-                          </ul>
-                          <input type="number" class="form-control" aria-label="Text input with dropdown button" min="0">
-                        </div>
-
-                      </div>
-                    </div>
-                    
-                    <!-- top right accordion column -->
-
-                    <div class='accordion-column'>
-                      <div class='top-right-column'>
-                        Some Text in Column Two
-
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                          <label class="form-check-label" for="defaultCheck1">
-                            GLUTEN
-                          </label>
-                        </div>
-
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                          <label class="form-check-label" for="defaultCheck1">
-                            DAIRY
-                          </label>
-                        </div>
-
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                          <label class="form-check-label" for="defaultCheck1">
-                            SOY
-                          </label>
-                        </div>
-
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                          <label class="form-check-label" for="defaultCheck1">
-                            NUTS
-                          </label>
-                        </div>
-
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                          <label class="form-check-label" for="defaultCheck1">
-                            ADDED SUGAR
-                          </label>
-                        </div>
-
-                      </div>
-                    </div>
-
-
-                  </div>
-
-                  <!--  bottom row of accordion -->
-
-                  <div class='accordion-row-2'>
-                    <div class='accordion-column'>
-                      <div class='bottom-column'>
-                        Enter specific ingredients to exclude...
-
-
-                        <div class="inner-form">
-
-                            <div class="form-control" id="basic-url">
-                              <input class="input-group-text" id="choices-text-preset-values" type="text" placeholder="Enter ingredients..." aria-describedby="basic-addon3"/>
-                          </div>
-                          
-                        </div>
-
-
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </fieldset>
-    </form>
-  </div>
-  <script src="js/extention/choices.js"></script>
-  <script>
-    var textPresetVal = new Choices('#choices-text-preset-values',
-    {
-      removeItemButton: true,
-    });
-    function replace_minmax(id, button){
-      document.getElementById(button).innerHTML = id
-    }
-
-  </script>
-
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-{% endblock %}
+ <style>
+     .index-background {
+     background-image: url("{% static 'admin/img/bg_image.svg'%}");
+     background-repeat: no-repeat;
+     background-position: center;
+     background-size: cover;
+     top: 0;
+     }
+ </style>
+ <body class="sb-nav-fixed sb-sidenav-toggled index-background">
+     
+     
+     {% comment %} <img src="{% static 'admin/img/bg_image.svg' %}" alt="" > {% endcomment %}
+ 
+ 
+ 
+     <div id="layoutSidenav">
+         <div id="layoutSidenav_content">
+             <main>
+                 <br><br>
+                 <div class="row">
+                     <div class="container-fluid px-4 col-md-4">
+                         <h1 class="mt-4">Welcome to Aspire</h1>
+                         <ol class="breadcrumb mb-4">
+                             <li class="breadcrumb-item active">We prioritize your health</li>
+                         </ol>
+                         {% comment %} <a class= 'btn btn-light' href= "{% url 'dash' %}">go to dash</a> {% endcomment %}
+                         <div class="row">
+                             <div class="justity-content-between">
+                         <a class= "btn btn-primary col-md-4" href = "{% url 'login' %}">login</a>
+                         
+                         <a class = 'btn btn-light col-md-4' href = "{% url 'register' %}">signup</a>
+                             </div>
+                         </div>
+                     </div>
+                     <div class="container-fluid px-4 col-md-4">
+                 </div>
+             </main>
+         </div>
+     </div>
+ {% endblock %}

@@ -36,19 +36,19 @@ def savedLoginPageView (request) :
 
     except :
 
-        return render(request, 'health_app/login.html')
+        return render(request, 'aspire/login.html')
 
     return savedPageView(request, user.id)
 
 def savedPageView(request, user_id, recipe_name=None) :
+    user = User.objects.get(id = user_id)
 
-        #search recipes
+    #search recipes
     if recipe_name != None :
         recipe_dict = searchRecipes(recipe_name)
     else :
         recipe_dict = dict()
 
-    user = User.objects.get(id = user_id)
     meal_dict = Recipe_User.objects.filter(user = user_id)
 
     recipe_list = list()
@@ -59,9 +59,10 @@ def savedPageView(request, user_id, recipe_name=None) :
     context = {
             'user' : user,
             'recipe_dict' : recipe_dict,
+            'recipe_list' : recipe_list,
         }
 
-    return render(request, 'health_app/dash.html', context)
+    return render(request, 'aspire/saved.html', context)
 
 #this allows a user to view recipes (search)
 def dashboardRecipePageView(request, user_id) :
