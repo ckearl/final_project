@@ -15,7 +15,7 @@ def registerPageView(request) :
     return render(request, 'aspire/register.html')
 
 def savedUserPageView(request) :
-    #this generates a new user obeject using the information received through registering
+    #this generates a new user object using the information received through registering
     new_user = User()
     new_user.firstName = request.POST.get('first_name')
     new_user.lastName = request.POST.get('last_name')
@@ -23,10 +23,6 @@ def savedUserPageView(request) :
     new_user.password = request.POST.get('inputPassword')
 
     new_user.save()
-
-    context = {
-        'user' : new_user
-    }
 
     return savedPageView(request, new_user.id)
 
@@ -44,7 +40,7 @@ def savedLoginPageView (request) :
 
     return savedPageView(request, user.id)
 
-def savedPageView(request, user_id=1, recipe_name=None, ingredient_name=None, ingredient_id=None) :
+def savedPageView(request, user_id, recipe_name=None) :
 
         #search recipes
     if recipe_name != None :
@@ -62,7 +58,6 @@ def savedPageView(request, user_id=1, recipe_name=None, ingredient_name=None, in
 
     context = {
             'user' : user,
-            'ingredient_name' : ingredient_name,
             'recipe_dict' : recipe_dict,
         }
 
@@ -99,6 +94,10 @@ def addRecipePageView(request, user_id) :
     return savedPageView(request, user_id)
 
 
-def recipePageView(request) :
-    return render(request, 'aspire/recipe.html')
+def recipePageView(request, user_id) :
+    user = User.objects.get(id = user_id)
+    context = {
+        'user' : user
+    }
+    return render(request, 'aspire/recipe.html', context)
 
