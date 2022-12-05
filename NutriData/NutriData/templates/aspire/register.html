@@ -5,6 +5,13 @@
 {% block title %} Register {% endblock %}
 {% block content %}
 
+<script>
+    
+    if ({{try_again}} == 2) {
+        alert("Email already used");
+    }
+</script>
+
 <body class="bg-primary">
     <div id="layoutAuthentication">
         <div id="layoutAuthentication_content">

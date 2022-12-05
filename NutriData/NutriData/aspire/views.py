@@ -11,8 +11,11 @@ def indexPageView(request) :
 def loginPageView(request) :
     return render(request, 'aspire/login.html')
 
-def registerPageView(request) :
-    return render(request, 'aspire/register.html')
+def registerPageView(request, try_again=1) :
+    context = {
+        'try_again' : try_again
+    }
+    return render(request, 'aspire/register.html', context)
 
 def savedUserPageView(request) :
     #this generates a new user object using the information received through registering
@@ -21,8 +24,10 @@ def savedUserPageView(request) :
     new_user.lastName = request.POST.get('last_name')
     new_user.email = request.POST.get('inputEmail')
     new_user.password = request.POST.get('inputPassword')
-
-    new_user.save()
+    try :
+        new_user.save()
+    except :
+        return registerPageView(request, 2)
 
     return savedPageView(request, new_user.id)
 

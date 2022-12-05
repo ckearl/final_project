@@ -15,7 +15,7 @@ class Recipe(models.Model) :
         return (self.title)
 
 class User(models.Model) :
-    email = models.EmailField(max_length= 100)
+    email = models.EmailField(unique= True, max_length= 100)
     password = models.CharField(max_length= 20)
     firstName = models.CharField(max_length= 20)
     lastName = models.CharField(max_length= 20)
