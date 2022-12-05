@@ -4,6 +4,7 @@ from .views import indexPageView, loginPageView, searchPageView, savedPageView, 
 urlpatterns = [
     path("", indexPageView, name="index"),
     path("login/", loginPageView, name="login"),   
+    path("register/", loginPageView, name="register"),   
     path("search/", searchPageView, name="search"), 
     path("saved/", savedPageView, name="saved"), 
     path("recipe/", recipePageView, name="recipe"), 

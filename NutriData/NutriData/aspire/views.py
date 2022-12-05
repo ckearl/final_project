@@ -7,6 +7,9 @@ def indexPageView(request) :
 def loginPageView(request) :
     return render(request, 'aspire/login.html')
 
+def registerPageView(request) :
+    return render(request, 'aspire/register.html')
+
 def searchPageView(request) :
     return render(request, 'aspire/search.html')
 
