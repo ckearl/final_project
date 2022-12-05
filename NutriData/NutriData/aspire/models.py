@@ -2,11 +2,17 @@ from django.db import models
 
 class Recipe(models.Model) :
     recipeId = models.IntegerField()
-    recipeTitle = models.CharField(max_length= 20)
-    recipeImgUrl = models.URLField(max_length= 200)
+    title = models.CharField(max_length= 20)
+    imgUrl = models.URLField(max_length= 200)
+    fat = models.IntegerField()
+    protein = models.IntegerField()
+    carbs = models.IntegerField()
+    calories = models.IntegerField()
+
+
 
     def __str__(self) :
-        return (self.recipeTitle)
+        return (self.title)
 
 class User(models.Model) :
     email = models.EmailField(max_length= 100)
@@ -29,9 +35,9 @@ class Recipe_User(models.Model) :
     starred = models.BooleanField()
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    folder = models.ForeignKey(Folder, on_delete=models.CASCADE)
+    folder = models.ForeignKey(Folder, default=None, blank=True, null=True, on_delete=models.CASCADE)
 
     def __str__(self) :
-        text = self.user.firstName + ' ' + self.user.lastName + '; ' + self.recipe.recipeTitle 
+        text = self.user.firstName + ' ' + self.user.lastName + '; ' + self.recipe.title 
         return (text)
         

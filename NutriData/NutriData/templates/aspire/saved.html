@@ -166,6 +166,39 @@
       </fieldset>
     </form>
   </div>
+
+  <div class="card-body">
+    <table id="datatablesSimple">
+        <thead>
+            <tr>
+                <th>Recipe Name</th>
+                <th>Calories</th>
+                <th>Carbs</th>
+                <th>Protein</th>
+                <th>Fat</th>
+                <th class="w-10">View</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                {% for recipe in recipe_obj_list %} 
+                <td>{{recipe.title}}</td>
+                <td>{{recipe.calories}}</td>
+                <td>{{recipe.carbs}}</td>
+                <td>{{recipe.protein}}</td>
+                <td>{{recipe.fat}}</td>
+                <td class="history-table-row">
+                    <form name="form" action="{% url 'recipe' user_id=user.id recipe_id=recipe.recipeId %}" method="Post">
+                        {% csrf_token %}
+                        <button class="btn btn-info">View</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
   <script src="js/extention/choices.js"></script>
   <script>
     var textPresetVal = new Choices('#choices-text-preset-values',

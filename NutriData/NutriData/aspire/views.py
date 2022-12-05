@@ -49,17 +49,16 @@ def savedPageView(request, user_id, recipe_name=None) :
     else :
         recipe_dict = dict()
 
-    meal_dict = Recipe_User.objects.filter(user = user_id)
+    recipe_user_dict = Recipe_User.objects.filter(user = user_id)
 
-    recipe_list = list()
-    for meal in meal_dict :
-        recipe_list.append(Recipe.objects.get(id = Recipe_User.recipe.id))
+    recipe_obj_list = list()
+    for recipe_user in recipe_user_dict :
+        recipe_obj_list.append((Recipe.objects.get(recipeId = recipe_user.recipe.recipeId)))
 
-
+    #this totally doesn't work properly. pass in a list a recipe objects
     context = {
             'user' : user,
-            'recipe_dict' : recipe_dict,
-            'recipe_list' : recipe_list,
+            'recipe_obj_list' : recipe_obj_list,
         }
 
     return render(request, 'aspire/saved.html', context)
@@ -80,7 +79,8 @@ def addRecipePageView(request, user_id) :
 
     new_recipe = Recipe()
 
-    new_recipe.name = recipe_dict['title']
+    new_recipe.title = recipe_dict['title']
+    new_recipe.imgUrl = recipe_dict['imgUrl']
     new_recipe.fat = recipe_dict['fat']
     new_recipe.protein = recipe_dict['protein']
     new_recipe.carbs = recipe_dict['carbs']
@@ -95,10 +95,12 @@ def addRecipePageView(request, user_id) :
     return savedPageView(request, user_id)
 
 
-def recipePageView(request, user_id) :
+def recipePageView(request, user_id, recipe_id) :
     user = User.objects.get(id = user_id)
+    recipe = Recipe.objects.get(recipeId = recipe_id)
     context = {
-        'user' : user
+        'user' : user,
+        'recipe' : recipe,
     }
     return render(request, 'aspire/recipe.html', context)
 
