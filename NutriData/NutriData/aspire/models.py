@@ -29,7 +29,7 @@ class Recipe_User(models.Model) :
     starred = models.BooleanField()
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    folder = models.ManyToManyField(Folder, on_delete=models.CASCADE)
+    folder = models.ForeignKey(Folder, on_delete=models.CASCADE)
 
     def __str__(self) :
         text = self.user.firstName + ' ' + self.user.lastName + '; ' + self.recipe.recipeTitle 
