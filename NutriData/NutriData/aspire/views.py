@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-from .functions import searchRecipes, getRecipeInformation, searchIngredients, getIngredientInformation1, getIngredientInformation2, searchRecipeByNutrient
+from .functions import searchRecipes, getRecipeInformation
 from .models import User, Recipe, Folder, Recipe_User
 from datetime import datetime
 from django.http import HttpResponse
@@ -83,10 +83,6 @@ def savedPageView(request, user_id=1, recipe_name=None, ingredient_name=None, in
 
     return render(request, 'health_app/dash.html', context)
 
-
-def recipePageView(request) :
-    return render(request, 'aspire/recipe.html')
-
 #this allows a user to view recipes (search)
 
 def dashboardRecipePageView(request, user_id) :
@@ -108,82 +104,17 @@ def addRecipePageView(request, user_id) :
     new_recipe.fat = recipe_dict['fat']
     new_recipe.protein = recipe_dict['protein']
     new_recipe.carbs = recipe_dict['carbs']
-    new_recipe.potassium = recipe_dict['potassium']
-    new_recipe.phosphorus = recipe_dict['phosphorus']
-    new_recipe.sodium = recipe_dict['sodium']
     new_recipe.calories = recipe_dict['calories'] 
     new_recipe.save()
 
-    new_meal = Meal()
-    new_meal.date = datetime.now().date()
+    new_meal = Recipe_User()
     new_meal.recipe = new_recipe
     new_meal.user = user
     new_meal.save()
 
-
     return savedPageView(request, user_id)
 
-#allows user to search through foods (like bananas)
-def dashboardIngredientPageView(request, user_id) :
-    user = User.objects.get(id = user_id)
 
-    ingredient_name = request.GET['ingredient_name']
+def recipePageView(request) :
+    return render(request, 'aspire/recipe.html')
 
-    return savedPageView(request, user_id, ingredient_name=ingredient_name)
-
-#allows user to see and select the unit and amount of food they consumed
-def dashboardIngredientUnitPageView(request, user_id, ingredient_name) :
-    user = User.objects.get(id = user_id)
-
-    ingredient_id = request.GET['selected_ingredient']
-
-    return savedPageView(request, user_id, ingredient_id=ingredient_id, ingredient_name=ingredient_name)
-
-#allows user to add food (like banana) to their record
-def addIngredientPageView(request, ingredient_id, user_id, ingredient_name) :
-    user = User.objects.get(id = user_id)
-
-    amount = request.POST.get('selected_amount')
-    unit = request.POST.get('selected_unit')
-    ingredient_dict = getIngredientInformation2(ingredient_id, amount, unit)
-
-    new_ingredient = Recipe()
-
-    new_ingredient.name = ingredient_name
-    new_ingredient.fat = ingredient_dict['fat']
-    new_ingredient.protein = ingredient_dict['protein']
-    new_ingredient.carbs = ingredient_dict['carbs']
-    new_ingredient.potassium = ingredient_dict['potassium']
-    new_ingredient.phosphorus = ingredient_dict['phosphorus']
-    new_ingredient.sodium = ingredient_dict['sodium']
-    new_ingredient.calories = ingredient_dict['calories'] 
-    new_ingredient.save()
-
-    new_meal = Meal()
-    new_meal.date = datetime.now().date()
-    new_meal.recipe = new_ingredient
-    new_meal.user = user
-    new_meal.save()
-
-
-    return savedPageView(request, user_id)
-
-# this allows a user to add water to their record
-def addWaterPageView(request, user_id) :
-    user = User.objects.get(id = user_id)
-
-    amount = request.GET['water_added']
-
-    water = Recipe()
-    water.name = 'Water'
-    water.water = amount
-    water.save()
-
-    new_meal = Meal()
-    new_meal.date = datetime.now().date()
-    new_meal.recipe = water
-    new_meal.user = user
-    new_meal.save()
-
-
-    return savedPageView(request, user_id)
