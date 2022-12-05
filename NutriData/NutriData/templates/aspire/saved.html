@@ -14,7 +14,13 @@
  {% block title %} Saved {% endblock %}
  {% block content %}
 
-<div class="s005">
+<style>
+.saved-background {
+  background-image: url("{% static 'admin/img/food.jpg' %}");
+}
+</style>
+
+<div class="s005 saved-background">
     <form>
       <fieldset>
         <legend>WHAT ARE YOU LOOKING FOR?</legend>
