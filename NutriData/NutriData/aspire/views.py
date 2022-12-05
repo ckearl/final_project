@@ -44,26 +44,13 @@ def savedLoginPageView (request) :
 
     return savedPageView(request, user.id)
 
-def savedPageView(request, user_id=1, recipe_name=None, ingredient_name=None, ingredient_id=None) :
+def savedPageView(request, user_id, recipe_name=None) :
 
         #search recipes
     if recipe_name != None :
         recipe_dict = searchRecipes(recipe_name)
     else :
         recipe_dict = dict()
-    '''
-    #search ingredients
-    if ingredient_name != None :
-        ingredient_dict = searchIngredients(ingredient_name)
-    else :
-        ingredient_dict = dict()
-
-    #enter measurement for ingredients
-    if ingredient_id != None :
-        measure_list = getIngredientInformation1(ingredient_id)
-    else :
-        measure_list = list()
-    '''
 
     user = User.objects.get(id = user_id)
     meal_dict = Recipe_User.objects.filter(user = user_id)
@@ -75,11 +62,7 @@ def savedPageView(request, user_id=1, recipe_name=None, ingredient_name=None, in
 
     context = {
             'user' : user,
-            'ingredient_name' : ingredient_name,
             'recipe_dict' : recipe_dict,
-            #'ingredient_dict' : ingredient_dict,
-            'ingredient_id' : ingredient_id,
-            #'measure_list' : measure_list,
         }
 
     return render(request, 'health_app/dash.html', context)
@@ -115,6 +98,6 @@ def addRecipePageView(request, user_id) :
     return savedPageView(request, user_id)
 
 
-def recipePageView(request) :
+def recipePageView(request, user_id) :
     return render(request, 'aspire/recipe.html')
 
