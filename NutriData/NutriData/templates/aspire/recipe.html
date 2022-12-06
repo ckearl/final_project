@@ -4,5 +4,18 @@
 {% load static %}
 
 {% block content %}
-    <p>recipe view<p>
+    <p>recipe view</p>
+    <ul>
+        <li>image</li>
+        <li>title</li>
+        <li>nutrients</li>
+        <li>ingredients</li>
+        <li>directions</li>
+    </ul>
+
+    {% for key, value in ingredient_dict.items %}
+        <p>{{key}}</p>
+        <p>{{value}}</p>
+        <br>
+    {% endfor %}
 {% endblock %}

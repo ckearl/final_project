@@ -173,6 +173,11 @@
     </form>
   </div>
 
+  {% for recipe in recipe_list  %}
+    <p><img src="{{recipe.2}}" alt="{{recipe.0}}"><a href="{% url 'recipe' user_id=user.id recipe_id=recipe.1%}">{{recipe.0}}</a></p>
+  {% endfor %}
+  <br><br>
+
   <div class="card-body">
     <table id="datatablesSimple">
         <thead>
