@@ -9,8 +9,6 @@ class Recipe(models.Model) :
     carbs = models.IntegerField()
     calories = models.IntegerField()
 
-
-
     def __str__(self) :
         return (self.title)
 

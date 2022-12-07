@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-from .functions import searchRecipes, getRecipeInformation
+from .functions import searchRecipesFiltered, getRecipeInfo
 from .models import User, Recipe, Folder, Recipe_User
 from datetime import datetime
 from django.http import HttpResponse
@@ -27,7 +27,7 @@ def savedUserPageView(request) :
     try :
         new_user.save()
     except :
-        return registerPageView(request, 2)
+        return registerPageView(request, try_again=2)
 
     return savedPageView(request, new_user.id)
 
@@ -48,11 +48,13 @@ def savedLoginPageView (request) :
 def savedPageView(request, user_id, recipe_name=None) :
     user = User.objects.get(id = user_id)
 
+    ingredent_list = ['chicken', 'tortilla']
+    
     #search recipes
-    if recipe_name != None :
-        recipe_dict = searchRecipes(recipe_name)
+    if ingredent_list != None :
+        recipe_list = searchRecipesFiltered(ingredent_list)
     else :
-        recipe_dict = dict()
+        recipe_list = list()
 
     recipe_user_dict = Recipe_User.objects.filter(user = user_id)
 
@@ -63,6 +65,7 @@ def savedPageView(request, user_id, recipe_name=None) :
     context = {
             'user' : user,
             'recipe_obj_list' : recipe_obj_list,
+            'recipe_list' : recipe_list,
         }
 
     return render(request, 'aspire/saved.html', context)
@@ -79,7 +82,7 @@ def addRecipePageView(request, user_id) :
     user = User.objects.get(id = user_id)
 
     recipe_id = request.POST['selected_recipe']
-    recipe_dict = getRecipeInformation(recipe_id)
+    recipe_dict = getRecipeInfo(recipe_id)
 
     new_recipe = Recipe()
 
@@ -101,10 +104,16 @@ def addRecipePageView(request, user_id) :
 
 def recipePageView(request, user_id, recipe_id) :
     user = User.objects.get(id = user_id)
-    recipe = Recipe.objects.get(recipeId = recipe_id)
+
+    title, ingredient_dict, instructions_dict, nutrient_dict = getRecipeInfo(recipe_id)
+
+
     context = {
         'user' : user,
-        'recipe' : recipe,
+        'title' : title,
+        'ingredient_dict' : ingredient_dict,
+        'instructions_dict' : instructions_dict,
+        'nutrient_dict' : nutrient_dict
     }
     return render(request, 'aspire/recipe.html', context)
 
