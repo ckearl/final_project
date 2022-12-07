@@ -45,37 +45,84 @@ def savedLoginPageView (request) :
 
     return savedPageView(request, user.id)
 
-def savedPageView(request, user_id, recipe_name=None) :
+def savedPageView(request, user_id) :
     user = User.objects.get(id = user_id)
 
-    ingredent_list = ['chicken', 'tortilla']
-    
-    #search recipes
-    if ingredent_list != None :
-        recipe_list = searchRecipesFiltered(ingredent_list)
+    includeIngredientsString = request.GET.get('choices-text-preset-values')
+    includeIngredientsList = list()
+    if includeIngredientsString != None:
+        includeIngredientsList = includeIngredientsString.split(',')
+
+
+    # gets min max values for each macro
+    max_min_carbs = request.GET.get('max-min-carbs')
+    max_min_protein = request.GET.get('max-min-protein')
+    max_min_fat = request.GET.get('max-min-fat')
+    max_min_calories = request.GET.get('max-min-calories')
+    if max_min_carbs == 'min' :
+        minCarbs = request.GET.get('carbs-val')
+        maxCarbs = None
+    else :
+        maxCarbs = request.GET.get('carbs-val')
+        minCarbs = None
+    if max_min_protein == 'min' :
+        minProtein = request.GET.get('protein-val')
+        maxProtein = None
+    else :
+        maxProtein = request.GET.get('protein-val')
+        minProtein = None
+    if max_min_fat == 'min' :
+        minFat = request.GET.get('fat-val')
+        maxFat = None
+    else :
+        maxFat = request.GET.get('fat-val')
+        minFat = None
+    if max_min_calories == 'min' :
+        minCalories = request.GET.get('calories-val')
+        maxCalories = None
+    else :
+        maxCalories = request.GET.get('calories-val')
+        minCalories = None
+
+    # gets ingredients to avoid
+
+    excludeIngredientsString = request.GET.get('choices-text-preset-values-exclude')
+    excludeIngredientsList = list()
+    if excludeIngredientsString != None:
+        excludeIngredientsList = excludeIngredientsString.split(',')
+
+    gluten_check = request.GET.get('gluten-check')
+    dairy_check = request.GET.get('dairy-check')
+    soy_check = request.GET.get('soy-check')
+    nuts_check = request.GET.get('nuts-check')
+    sugar_check = request.GET.get('sugar-check')
+    if gluten_check != None : excludeIngredientsList.append(gluten_check)
+    if dairy_check != None : excludeIngredientsList.append(dairy_check)
+    if soy_check != None : excludeIngredientsList.append(soy_check)
+    if nuts_check != None : excludeIngredientsList.append(nuts_check)
+    if sugar_check != None : excludeIngredientsList.append(sugar_check)
+
+
+    if bool(includeIngredientsList) == True :
+        recipe_list = searchRecipesFiltered(includeIngredientsList, excludeIngredientsList, minCarbs, maxCarbs, minProtein, maxProtein, minCalories, maxCalories, minFat, maxFat)
     else :
         recipe_list = list()
 
-    recipe_user_dict = Recipe_User.objects.filter(user = user_id)
+    recipe_user_list = Recipe_User.objects.filter(user = user_id)
 
     recipe_obj_list = list()
-    for recipe_user in recipe_user_dict :
+    for recipe_user in recipe_user_list :
         recipe_obj_list.append((Recipe.objects.get(recipeId = recipe_user.recipe.recipeId)))
 
     context = {
             'user' : user,
+            'recipe_user_list' : recipe_user_list,
             'recipe_obj_list' : recipe_obj_list,
             'recipe_list' : recipe_list,
         }
 
     return render(request, 'aspire/saved.html', context)
 
-#this allows a user to view recipes (search)
-def dashboardRecipePageView(request, user_id) :
-    user = User.objects.get(id = user_id)
-    recipe_name = request.GET['recipe_name']
-
-    return savedPageView(request, user_id, recipe_name=recipe_name)
 
 #this allows a user to add recipes to their record
 def addRecipePageView(request, user_id) :
@@ -101,6 +148,33 @@ def addRecipePageView(request, user_id) :
 
     return savedPageView(request, user_id)
 
+def deleteRecipePageView(request, user_id, recipe_id) :
+    user = User.objects.get(id = user_id)
+    recipe = Recipe.objects.get(recipeId = recipe_id, user = user)
+
+    recipe_user = Recipe_User.objects.get(recipe = recipe)
+
+
+    recipe_user.delete()
+
+    return savedPageView(request, user_id)
+
+def starRecipePageView(request, user_id, recipe_id) :
+    user = User.objects.get(id = user_id)
+    recipe = Recipe.objects.get(recipeId = recipe_id)
+
+    recipe_user = Recipe_User.objects.get(recipe = recipe, user = user)
+
+    
+    recipe_user_starred = request.POST.get('star-recipe')
+    if recipe_user_starred == 'starred' :
+        recipe_user.starred = True
+    else :
+        recipe_user.starred = False
+    recipe_user.save()
+
+
+    return savedPageView(request, user_id)
 
 def recipePageView(request, user_id, recipe_id) :
     user = User.objects.get(id = user_id)

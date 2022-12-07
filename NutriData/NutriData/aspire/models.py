@@ -30,7 +30,7 @@ class Folder(models.Model) :
         return (self.folderName)
 
 class Recipe_User(models.Model) :
-    starred = models.BooleanField()
+    starred = models.BooleanField(default=False)
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     folder = models.ForeignKey(Folder, default=None, blank=True, null=True, on_delete=models.CASCADE)
