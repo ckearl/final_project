@@ -7,7 +7,6 @@ urlpatterns = [
     path("login/", loginPageView, name="login"),   
     path("register/", registerPageView, name="register"),   
     path("register/<int:try_again>", registerPageView, name="register"),   
-    path("saved/<int:user_id>/<str:recipe_name>", savedPageView, name="saved"), 
     path("saved/<int:user_id>", savedPageView, name="saved"), 
     path("recipe/<int:user_id>/<int:recipe_id>", recipePageView, name="recipe"), 
     path("saved_user/", savedUserPageView, name="saved_user"), 

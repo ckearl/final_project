@@ -26,8 +26,8 @@
         <legend>WHAT ARE YOU LOOKING FOR?</legend>
         <div class="inner-form">
           <div class="input-field">
-            <input class="form-control" id="choices-text-preset-values" type="text" placeholder="Type to search..." />
-            <button class="btn-search" type="button">
+            <input class="form-control" name="choices-text-preset-values" id="choices-text-preset-values" type="text" placeholder="Type to search..." />
+            <button class="btn-search" type="submit">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                 <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
               </svg>
@@ -53,44 +53,45 @@
                     <div class='accordion-column'>
                       <div class='top-left-column'>
                         
+                        <!-- carbs button -->
                         <div class="input-group mb-3">
                           <button class="btn btn-outline-secondary" type="button" id="button-addon1">CARBOHYDRATES</button>
-                          <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="true" id="carb_button"></button>
-                          <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" id="carb_min" onclick="replace_minmax('Min', 'carb_button')" href="#">Min</a></li>
-                            <li><a class="dropdown-item" id="carb_max" onclick="replace_minmax('Max', 'carb_button')" href="#">Max</a></li>
-                          </ul>
-                          <input type="number" class="form-control" aria-label="Text input with dropdown button" min="0">
+                          <select id="max-min-carbs" name="max-min-carbs">
+                            <option class="dropdown-item" id="carb_min" onclick="replace_minmax('Min', 'carb_button')" value="min">Min</option>
+                            <option class="dropdown-item" id="carb_max" onclick="replace_minmax('Max', 'carb_button')" value="max">Max</option>
+                          </select>
+                          <input id="carbs-val" name="carbs-val" type="number" class="form-control" aria-label="Text input with dropdown button" min="0" value="0">
                         </div>
 
+                        <!-- protein button -->
                         <div class="input-group mb-3">
                           <button class="btn btn-outline-secondary" type="button" id="button-addon1">PROTEIN</button>
-                          <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="true" id="protein_button"></button>
-                          <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" id="protein_min" onclick="replace_minmax('Min', 'protein_button')" href="#">Min</a></li>
-                            <li><a class="dropdown-item" id="protein_max" onclick="replace_minmax('Max', 'protein_button')" href="#">Max</a></li>
-                          </ul>
-                          <input type="number" class="form-control" aria-label="Text input with dropdown button" min="0">
+                          <select id="max-min-protein" name="max-min-protein">
+                            <option value="min" class="dropdown-item" id="protein_min" onclick="replace_minmax('Min', 'protein_button')">Min</option>
+                            <option value="max" class="dropdown-item" id="protein_max" onclick="replace_minmax('Max', 'protein_button')">Max</option>
+                          </select>
+                          <input id="protein-val" name="protein-val" value="0" type="number" class="form-control" aria-label="Text input with dropdown button" min="0">
                         </div>
 
+
+                        <!-- fat button -->
                         <div class="input-group mb-3">
                           <button class="btn btn-outline-secondary" type="button" id="button-addon1">FAT</button>
-                          <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="true" id="fat_button"></button>
-                          <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" id="fat_min" onclick="replace_minmax('Min', 'fat_button')" href="#">Min</a></li>
-                            <li><a class="dropdown-item" id="fat_max" onclick="replace_minmax('Max', 'fat_button')" href="#">Max</a></li>
-                          </ul>
-                          <input type="number" class="form-control" aria-label="Text input with dropdown button" min="0">
+                          <select id="max-min-fat" name="max-min-fat">
+                            <option value="min" class="dropdown-item" id="fat_min" onclick="replace_minmax('Min', 'fat_button')" >Min</option>
+                            <option value="max" class="dropdown-item" id="fat_max" onclick="replace_minmax('Max', 'fat_button')" >Max</option>
+                          </select>
+                          <input id="fat-val" name="fat-val" value="0" type="number" class="form-control" aria-label="Text input with dropdown button" min="0">
                         </div>
 
+                        <!-- calories button -->
                         <div class="input-group mb-3">
                           <button class="btn btn-outline-secondary" type="button" id="button-addon1">CALORIES</button>
-                          <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="true" id="calories_button"></button>
-                          <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" id="calories_min" onclick="replace_minmax('Min', 'calories_button')" href="#">Min</a></li>
-                            <li><a class="dropdown-item" id="calories_max" onclick="replace_minmax('Max', 'calories_button')" href="#">Max</a></li>
-                          </ul>
-                          <input type="number" class="form-control" aria-label="Text input with dropdown button" min="0">
+                          <select id="max-min-calories" name="max-min-calories">
+                            <option value="min" class="dropdown-item" id="calories_min" onclick="replace_minmax('Min', 'calories_button')" >Min</option>
+                            <option value="max" class="dropdown-item" id="calories_max" onclick="replace_minmax('Max', 'calories_button')" >Max</option>
+                          </select>
+                          <input id="calories-val" name="calories-val" value="0" type="number" class="form-control" aria-label="Text input with dropdown button" min="0">
                         </div>
 
                       </div>
@@ -100,39 +101,39 @@
 
                     <div class='accordion-column'>
                       <div class='top-right-column'>
-                        Some Text in Column Two
+                        EXCLUDE:
 
                         <div class="form-check">
-                          <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                          <label class="form-check-label" for="defaultCheck1">
+                          <input class="form-check-input" type="checkbox" value="gluten" id="gluten-check" name="gluten-check">
+                          <label class="form-check-label" for="gluten-check">
                             GLUTEN
                           </label>
                         </div>
 
                         <div class="form-check">
-                          <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                          <label class="form-check-label" for="defaultCheck1">
+                          <input class="form-check-input" type="checkbox" value="dairy" id="dairy-check" name="dairy-check">
+                          <label class="form-check-label" for="dairy-check">
                             DAIRY
                           </label>
                         </div>
 
                         <div class="form-check">
-                          <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                          <label class="form-check-label" for="defaultCheck1">
+                          <input class="form-check-input" type="checkbox" value="soy" id="soy-check" name="soy-check">
+                          <label class="form-check-label" for="soy-check">
                             SOY
                           </label>
                         </div>
 
                         <div class="form-check">
-                          <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                          <label class="form-check-label" for="defaultCheck1">
+                          <input class="form-check-input" type="checkbox" value="nuts" id="nuts-check" name="nuts-check">
+                          <label class="form-check-label" for="nuts-check">
                             NUTS
                           </label>
                         </div>
 
                         <div class="form-check">
-                          <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                          <label class="form-check-label" for="defaultCheck1">
+                          <input class="form-check-input" type="checkbox" value="addded sugar" id="sugar-check" name="sugar-check">
+                          <label class="form-check-label" for="sugar-check">
                             ADDED SUGAR
                           </label>
                         </div>
@@ -150,19 +151,21 @@
                       <div class='bottom-column'>
                         Enter specific ingredients to exclude...
 
-
+                        </div>
                         <div class="inner-form">
-
-                            <div class="form-control" id="basic-url">
-                              <input class="input-group-text" id="choices-text-preset-values" type="text" placeholder="Enter ingredients..." aria-describedby="basic-addon3"/>
+                          <div class="input-field">
+                            <input class="form-control" name="choices-text-preset-values-exclude" id="choices-text-preset-values" type="text" placeholder="Type to search..." />
+                            </button>
                           </div>
-                          
                         </div>
 
 
                       </div>
                     </div>
                   </div>
+
+
+
                 </div>
               </div>
             </div>
