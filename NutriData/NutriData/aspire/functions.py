@@ -109,8 +109,9 @@ def getRecipeInfo(id):
             nutrientDict[i['name']] = amountString  
         else:
             pass
+    title = r['title']
     
-    return ingredientDict, instructionsDict, nutrientDict
+    return title, ingredientDict, instructionsDict, nutrientDict
 
 def round(val):
     return int(math.ceil(val))

@@ -105,11 +105,12 @@ def addRecipePageView(request, user_id) :
 def recipePageView(request, user_id, recipe_id) :
     user = User.objects.get(id = user_id)
 
-    ingredient_dict, instructions_dict, nutrient_dict = getRecipeInfo(recipe_id)
+    title, ingredient_dict, instructions_dict, nutrient_dict = getRecipeInfo(recipe_id)
 
 
     context = {
         'user' : user,
+        'title' : title,
         'ingredient_dict' : ingredient_dict,
         'instructions_dict' : instructions_dict,
         'nutrient_dict' : nutrient_dict
