@@ -49,7 +49,20 @@ def savedPageView(request, user_id, recipe_name=None) :
     user = User.objects.get(id = user_id)
 
     ingredent_list = ['chicken', 'tortilla']
+    '''
+    includeIngredientsList = request.POST.get('______')
+    excludeIngredientsList = request.POST.get('______')
+    minCarbs = request.POST.get('______')
+    maxCarbs = request.POST.get('______')
+    minProtein = request.POST.get('______')
+    maxProtein = request.POST.get('______')
+    minCalories = request.POST.get('______')
+    maxCalories = request.POST.get('______')
+    minFat = request.POST.get('______')
+    maxFat = request.POST.get('______')
     
+    ingredient_list = searchRecipesFiltered(includeIngredientsList, excludeIngredientsList, minCarbs, maxCarbs, minProtein, maxProtein, minCalories, maxCalories, minFat, maxFat)
+    '''
     #search recipes
     if ingredent_list != None :
         recipe_list = searchRecipesFiltered(ingredent_list)

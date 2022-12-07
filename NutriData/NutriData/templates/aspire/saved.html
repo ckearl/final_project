@@ -21,7 +21,7 @@
 </style>
 
 <div class="s005 saved-background">
-    <form>
+    <form action="{% url 'saved' user_id=user.id %}" method="get">
       <fieldset>
         <legend>WHAT ARE YOU LOOKING FOR?</legend>
         <div class="inner-form">
@@ -139,7 +139,7 @@
 
                       </div>
                     </div>
-
+                    <!-- add a 'search' button that is an input type="sumbit" -->
 
                   </div>
 
