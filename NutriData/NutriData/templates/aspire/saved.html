@@ -132,7 +132,7 @@
                         </div>
 
                         <div class="form-check">
-                          <input class="form-check-input" type="checkbox" value="addded sugar" id="sugar-check" name="sugar-check">
+                          <input class="form-check-input" type="checkbox" value="added sugar" id="sugar-check" name="sugar-check">
                           <label class="form-check-label" for="sugar-check">
                             ADDED SUGAR
                           </label>
@@ -158,8 +158,6 @@
                             </button>
                           </div>
                         </div>
-
-
                       </div>
                     </div>
                   </div>
@@ -185,17 +183,39 @@
     <table id="datatablesSimple">
         <thead>
             <tr>
+
+                <th>Starred</th>
                 <th>Recipe Name</th>
                 <th>Calories</th>
                 <th>Carbs</th>
                 <th>Protein</th>
                 <th>Fat</th>
                 <th class="w-10">View</th>
+                <th class="w-10">Delete</th>
+
+
             </tr>
         </thead>
         <tbody>
             <tr>
+
                 {% for recipe in recipe_obj_list %} 
+                <td>
+                  <div class="form-check">
+                    <form name="star-recipe" id="star-recipe" action="{% url 'star_recipe' user_id=user.id recipe_id=recipe.recipeId %}" method="Post">
+                      {% csrf_token %}
+                      <input class="form-check-input" name="star-recipe" type="checkbox" value="starred" onchange="submit()"
+                      {% for recipe_user in recipe_user_list %}
+                        {% if recipe_user.recipe.recipeId == recipe.recipeId %}
+                          {% if recipe_user.starred == True %}
+                            checked
+                          {% endif %}
+                        {% endif %}
+                      {% endfor %}
+                      />
+                    </form>
+                  </div>
+                </td>
                 <td>{{recipe.title}}</td>
                 <td>{{recipe.calories}}</td>
                 <td>{{recipe.carbs}}</td>
@@ -206,6 +226,12 @@
                         {% csrf_token %}
                         <button class="btn btn-info">View</button>
                     </form>
+                </td>
+                <td class="history-table-row" style="">
+                  <form name="form" action="{% url 'delete_recipe' user_id=user.id recipe_id=recipe.recipeId %}" method="Post">
+                      {% csrf_token %}
+                      <button class="btn btn-info">Delete</button>
+                  </form>
                 </td>
             </tr>
             {% endfor %}

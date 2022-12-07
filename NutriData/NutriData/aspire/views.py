@@ -108,26 +108,21 @@ def savedPageView(request, user_id) :
     else :
         recipe_list = list()
 
-    recipe_user_dict = Recipe_User.objects.filter(user = user_id)
+    recipe_user_list = Recipe_User.objects.filter(user = user_id)
 
     recipe_obj_list = list()
-    for recipe_user in recipe_user_dict :
+    for recipe_user in recipe_user_list :
         recipe_obj_list.append((Recipe.objects.get(recipeId = recipe_user.recipe.recipeId)))
 
     context = {
             'user' : user,
+            'recipe_user_list' : recipe_user_list,
             'recipe_obj_list' : recipe_obj_list,
             'recipe_list' : recipe_list,
         }
 
     return render(request, 'aspire/saved.html', context)
 
-#this allows a user to view recipes (search)
-def dashboardRecipePageView(request, user_id) :
-    user = User.objects.get(id = user_id)
-    recipe_name = request.GET['recipe_name']
-
-    return savedPageView(request, user_id, recipe_name=recipe_name)
 
 #this allows a user to add recipes to their record
 def addRecipePageView(request, user_id) :
@@ -153,6 +148,33 @@ def addRecipePageView(request, user_id) :
 
     return savedPageView(request, user_id)
 
+def deleteRecipePageView(request, user_id, recipe_id) :
+    user = User.objects.get(id = user_id)
+    recipe = Recipe.objects.get(recipeId = recipe_id, user = user)
+
+    recipe_user = Recipe_User.objects.get(recipe = recipe)
+
+
+    recipe_user.delete()
+
+    return savedPageView(request, user_id)
+
+def starRecipePageView(request, user_id, recipe_id) :
+    user = User.objects.get(id = user_id)
+    recipe = Recipe.objects.get(recipeId = recipe_id)
+
+    recipe_user = Recipe_User.objects.get(recipe = recipe, user = user)
+
+    
+    recipe_user_starred = request.POST.get('star-recipe')
+    if recipe_user_starred == 'starred' :
+        recipe_user.starred = True
+    else :
+        recipe_user.starred = False
+    recipe_user.save()
+
+
+    return savedPageView(request, user_id)
 
 def recipePageView(request, user_id, recipe_id) :
     user = User.objects.get(id = user_id)
