@@ -80,7 +80,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'nutridata',
         'USER' : 'postgres',
-        'PASSWORD' : 'Nbamwia2cf',
+        'PASSWORD' : 'Mn160132',
         'HOST' : 'localhost'
     }
 }
