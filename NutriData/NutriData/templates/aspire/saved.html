@@ -180,9 +180,14 @@
 
 </div>
 
+
 <div class="row justify-content-sm-center align-items-md-center">
   <div class="col-xl-10">
       <div class="card mb-4">
+        <div class="card-header">
+          <i class="fas fa-table me-1"></i>
+          <h4>Saved Recipes</h4>
+        </div>
         <div class="card-body">
           <table id="datatablesSimple" class="dataTable-table table">
               <thead>
@@ -230,7 +235,7 @@
                       <td class="history-table-row" style="">
                         <form name="form" action="{% url 'delete_recipe' user_id=user.id recipe_id=recipe.recipeId %}" method="Post">
                             {% csrf_token %}
-                            <button class="btn btn-info">Delete</button>
+                            <button class="btn btn-info" onclick="confirm('are you sure you would like to unsave this recipe?')">Delete</button>
                         </form>
                       </td>
                   </tr>
