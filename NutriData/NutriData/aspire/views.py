@@ -50,9 +50,10 @@ def savedPageView(request, user_id) :
 
     includeIngredientsString = request.GET.get('choices-text-preset-values')
     includeIngredientsList = list()
-    if includeIngredientsString != None:
+    if includeIngredientsString != None :
         includeIngredientsList = includeIngredientsString.split(',')
-
+        for ingredient in range(0, len(includeIngredientsList)) :
+            includeIngredientsList[ingredient] = includeIngredientsList[ingredient].strip()
 
     # gets min max values for each macro
     max_min_carbs = request.GET.get('max-min-carbs')
@@ -150,9 +151,9 @@ def addRecipePageView(request, user_id) :
 
 def deleteRecipePageView(request, user_id, recipe_id) :
     user = User.objects.get(id = user_id)
-    recipe = Recipe.objects.get(recipeId = recipe_id, user = user)
+    recipe = Recipe.objects.get(recipeId = recipe_id)
 
-    recipe_user = Recipe_User.objects.get(recipe = recipe)
+    recipe_user = Recipe_User.objects.get(recipe = recipe, user = user)
 
 
     recipe_user.delete()
