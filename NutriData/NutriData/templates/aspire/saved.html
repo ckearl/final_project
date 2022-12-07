@@ -19,7 +19,13 @@
   background-image: url("{% static 'admin/img/food.jpg' %}");
 }
 </style>
-
+<script>
+  function confirm_delete() {
+    if (confirm('Unsave Recipe?') == true) {
+      document.getElementById('delete-form').submit()
+    }
+  }
+</script>
 
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-secondary">
   <!-- Navbar Brand-->
@@ -257,9 +263,9 @@
                           </form>
                       </td>
                       <td class="history-table-row" style="">
-                        <form name="form" action="{% url 'delete_recipe' user_id=user.id recipe_id=recipe.recipeId %}" method="Post">
+                        <form name="form" id="delete-form" action="{% url 'delete_recipe' user_id=user.id recipe_id=recipe.recipeId %}" method="Post">
                             {% csrf_token %}
-                            <button class="btn btn-info" onclick="confirm('are you sure you would like to unsave this recipe?')">Delete</button>
+                            <button class="btn btn-info"  type="button" onclick="confirm_delete()">Delete</button>
                         </form>
                       </td>
                   </tr>
