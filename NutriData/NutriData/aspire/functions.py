@@ -96,22 +96,24 @@ def getRecipeInfo(id):
     nutrientDict = {}
     for i in r['nutrition']['nutrients']:
         if i['name'] == 'Calories':
-            amountString = str(i['amount']) + ' ' + str(i['unit'])
+            amountString = i['amount']
             nutrientDict[i['name']] = amountString
         elif i['name'] == 'Protein':
-            amountString = str(i['amount']) + ' ' + str(i['unit'])
+            amountString = i['amount'] 
             nutrientDict[i['name']] = amountString
         elif i['name'] == 'Fat':
-            amountString = str(i['amount']) + ' ' + str(i['unit'])
+            amountString = i['amount']
             nutrientDict[i['name']] = amountString
         elif i['name'] == 'Carbohydrates':
-            amountString = str(i['amount']) + ' ' + str(i['unit'])
+            amountString = i['amount']
             nutrientDict[i['name']] = amountString  
         else:
             pass
     title = r['title']
+    imgUrl = r['image']
+
     
-    return title, ingredientDict, instructionsDict, nutrientDict
+    return title, imgUrl, ingredientDict, instructionsDict, nutrientDict
 
 def round(val):
     return int(math.ceil(val))

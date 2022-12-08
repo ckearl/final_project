@@ -2,8 +2,8 @@ from django.db import models
 
 class Recipe(models.Model) :
     recipeId = models.IntegerField()
-    title = models.CharField(max_length= 20)
-    imgUrl = models.URLField(max_length= 200)
+    title = models.CharField(max_length= 100)
+    imgUrl = models.URLField(max_length= 1000)
     fat = models.IntegerField()
     protein = models.IntegerField()
     carbs = models.IntegerField()

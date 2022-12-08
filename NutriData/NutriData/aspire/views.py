@@ -48,6 +48,7 @@ def savedLoginPageView (request) :
 def savedPageView(request, user_id) :
     user = User.objects.get(id = user_id)
 
+    # gets ingredients to include
     includeIngredientsString = request.GET.get('choices-text-preset-values')
     includeIngredientsList = list()
     if includeIngredientsString != None :
@@ -86,12 +87,10 @@ def savedPageView(request, user_id) :
         minCalories = None
 
     # gets ingredients to avoid
-
     excludeIngredientsString = request.GET.get('choices-text-preset-values-exclude')
     excludeIngredientsList = list()
     if excludeIngredientsString != None:
         excludeIngredientsList = excludeIngredientsString.split(',')
-
     gluten_check = request.GET.get('gluten-check')
     dairy_check = request.GET.get('dairy-check')
     soy_check = request.GET.get('soy-check')
@@ -103,14 +102,14 @@ def savedPageView(request, user_id) :
     if nuts_check != None : excludeIngredientsList.append(nuts_check)
     if sugar_check != None : excludeIngredientsList.append(sugar_check)
 
-
+    # gets list of recipes that match search criteria
     if bool(includeIngredientsList) == True :
-        recipe_list = searchRecipesFiltered(includeIngredientsList, excludeIngredientsList, minCarbs, maxCarbs, minProtein, maxProtein, minCalories, maxCalories, minFat, maxFat)
+        search_recipe_list = searchRecipesFiltered(includeIngredientsList, excludeIngredientsList, minCarbs, maxCarbs, minProtein, maxProtein, minCalories, maxCalories, minFat, maxFat)
     else :
-        recipe_list = list()
+        search_recipe_list = list()
 
+    # gets list of recipes the user has saved
     recipe_user_list = Recipe_User.objects.filter(user = user_id)
-
     recipe_obj_list = list()
     for recipe_user in recipe_user_list :
         recipe_obj_list.append((Recipe.objects.get(recipeId = recipe_user.recipe.recipeId)))
@@ -119,27 +118,28 @@ def savedPageView(request, user_id) :
             'user' : user,
             'recipe_user_list' : recipe_user_list,
             'recipe_obj_list' : recipe_obj_list,
-            'recipe_list' : recipe_list,
+            'search_recipe_list' : search_recipe_list,
         }
 
     return render(request, 'aspire/saved.html', context)
 
-
 #this allows a user to add recipes to their record
-def addRecipePageView(request, user_id) :
+def addRecipePageView(request, user_id, recipe_id) :
     user = User.objects.get(id = user_id)
 
-    recipe_id = request.POST['selected_recipe']
-    recipe_dict = getRecipeInfo(recipe_id)
+    title, imgUrl, ingredient_dict, instructions_dict, nutrient_dict = getRecipeInfo(recipe_id)
+    
+
 
     new_recipe = Recipe()
 
-    new_recipe.title = recipe_dict['title']
-    new_recipe.imgUrl = recipe_dict['imgUrl']
-    new_recipe.fat = recipe_dict['fat']
-    new_recipe.protein = recipe_dict['protein']
-    new_recipe.carbs = recipe_dict['carbs']
-    new_recipe.calories = recipe_dict['calories'] 
+    new_recipe.title = title
+    new_recipe.recipeId = recipe_id
+    new_recipe.imgUrl = imgUrl
+    new_recipe.fat = nutrient_dict['Fat']
+    new_recipe.protein = nutrient_dict['Protein']
+    new_recipe.carbs = nutrient_dict['Carbohydrates']
+    new_recipe.calories = nutrient_dict['Calories'] 
     new_recipe.save()
 
     new_recipe_user = Recipe_User()
@@ -179,16 +179,29 @@ def starRecipePageView(request, user_id, recipe_id) :
 
 def recipePageView(request, user_id, recipe_id) :
     user = User.objects.get(id = user_id)
+    title, imgUrl, ingredient_dict, instructions_dict, nutrient_dict = getRecipeInfo(recipe_id)
+    recipe = ''
+    recipe_user = ''
+    try :
+        recipe = Recipe.objects.get(recipeId = recipe_id)
+        recipe_user = Recipe_User.objects.get(recipe = recipe, user = user)
+        saved = True
+    except :
+        saved = False
 
-    title, ingredient_dict, instructions_dict, nutrient_dict = getRecipeInfo(recipe_id)
 
 
     context = {
         'user' : user,
+        'recipe' : recipe,
+        'recipe_user' : recipe_user,
         'title' : title,
+        'imgUrl' : imgUrl,
         'ingredient_dict' : ingredient_dict,
         'instructions_dict' : instructions_dict,
-        'nutrient_dict' : nutrient_dict
+        'nutrient_dict' : nutrient_dict,
+        'saved' : saved,
+        'recipe_id' : recipe_id,
     }
     return render(request, 'aspire/recipe.html', context)
 
