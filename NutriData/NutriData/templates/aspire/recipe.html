@@ -47,24 +47,39 @@
 
 <div class="row" style="margin: .5rem;">
 
-
-    <div class="col-4">
-        <div class="card recipe-card">
-            <img src="{{imgUrl}}" alt="{{recipe.title}}">
+    <div class="col-8" style="padding: 0;">
+        <div class="row" style="margin: 0;">
+            <div class="col-6">
+                <div class="card recipe-card">
+                    <img src="{{imgUrl}}" alt="{{recipe.title}}">
+                </div>
+            </div>
+        
+            <div class="col-6">
+                <div class="card recipe-card" style="padding-left: 1rem;">
+                    <h1>Nutrients</h1>
+                    {% for key, value in nutrient_dict.items %}
+                    <p>{{key}}: {{value}}</p>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="row justify-content-sm-center align-items-md-center" style="margin: 0; padding-top: 1rem;">
+                <div class="col-auto" style="padding: 0;">
+                    <div class="card mb-4">
+                      <div class="card-header">
+                        <h1>Instructions</h1>
+                      </div>
+                      <div class="card-body">
+                        {% for key, value in instructions_dict.items %}
+                        <p>Step {{key}}: {{value}}</p>
+                        <br>
+                        {% endfor %}
+                      </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
-    <div class="col-4">
-        <div class="card recipe-card" style="padding-left: 1rem;">
-            <h1>Nutrients</h1>
-            {% for key, value in nutrient_dict.items %}
-            <p>{{key}}: {{value}}</p>
-            {% endfor %}
-        </div>
-    </div>    
-
-
-
     <div class="col-4">
         <div class="card" style="padding-left: 1rem;">
             <h1>Ingredients</h1>
@@ -77,21 +92,7 @@
 </div>
 
 
-<div class="row justify-content-sm-center align-items-md-center">
-    <div class="col-xl-10">
-        <div class="card mb-4">
-          <div class="card-header">
-            <h1>Instructions</h1>
-          </div>
-          <div class="card-body">
-            {% for key, value in instructions_dict.items %}
-            <p>Step {{key}}: {{value}}</p>
-            <br>
-            {% endfor %}
-          </div>
-        </div>
-    </div>
-</div>
+
 
 
 
