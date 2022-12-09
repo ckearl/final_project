@@ -239,7 +239,7 @@
               </thead>
               <tbody>
                   <tr>
-                      {% for recipe in recipe_obj_list %} 
+                      {% for recipe in recipe_obj_list reversed %} 
                       <td>
                         <div class="form-check">
                           <form name="star-recipe" id="star-recipe" action="{% url 'star_recipe' user_id=user.id recipe_id=recipe.recipeId %}" method="Post">
@@ -270,7 +270,7 @@
                       <td class="history-table-row">
                         <form name="form" id="delete-form" action="{% url 'delete_recipe' user_id=user.id recipe_id=recipe.recipeId %}" method="Post">
                             {% csrf_token %}
-                            <button class="btn btn-info"  type="button" onclick="confirm_delete()">Delete</button>
+                            <button class="btn btn-info">Delete</button>
                         </form>
                       </td>
                   </tr>

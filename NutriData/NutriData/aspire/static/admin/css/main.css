@@ -1379,3 +1379,9 @@ th {
 .align-items-md-center {
   align-items: center !important;
 }
+
+.bg-recipe {
+  --bs-primary-rgb: 13,110,253;
+  --bs-bg-opacity: .2;
+  background-color: rgba(var(--bs-primary-rgb),var(--bs-bg-opacity))!important;
+}
