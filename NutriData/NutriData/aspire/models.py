@@ -22,18 +22,10 @@ class User(models.Model) :
         name = self.firstName + ' ' + self.lastName
         return (name)
 
-
-class Folder(models.Model) :
-    folderName = models.CharField(max_length= 20)
-
-    def __str__(self) :
-        return (self.folderName)
-
 class Recipe_User(models.Model) :
     starred = models.BooleanField(default=False)
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    folder = models.ForeignKey(Folder, default=None, blank=True, null=True, on_delete=models.CASCADE)
 
     def __str__(self) :
         text = self.user.firstName + ' ' + self.user.lastName + '; ' + self.recipe.title 

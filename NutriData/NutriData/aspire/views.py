@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from .functions import searchRecipesFiltered, getRecipeInfo
-from .models import User, Recipe, Folder, Recipe_User
+from .models import User, Recipe, Recipe_User
 from datetime import datetime
 from django.http import HttpResponse
 
